@@ -4,9 +4,9 @@
         "project": "./tsconfig.json"
     },
     "rules": {
-        "@typescript-eslint/strict-boolean-expressions": "warn",
+        "@typescript-eslint/strict-boolean-expressions": "off",
         "space-before-function-paren": "off",
-    "@typescript-eslint/space-before-function-paren": "off"
+        "@typescript-eslint/space-before-function-paren": "off"
     }
 
 }
