@@ -21,9 +21,21 @@ describe('Bcrypt Adapter', () => {
     await stu.encrypt('any_value')
     expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
   })
+
   test('Should return a hash on success', async () => {
     const stu = makeStu()
     const hash = await stu.encrypt('any_value')
     expect(hash).toBe('hash')
+  })
+
+  test('Should throw if bcrypt throws', async () => {
+    const stu = makeStu()
+    jest.spyOn<any, string>(bcrypt, 'hash').mockReturnValueOnce(
+      new Promise((resolve, reject) => {
+        reject(new Error())
+      })
+    )
+    const promise = stu.encrypt('any_value')
+    await expect(promise).rejects.toThrow()
   })
 })
