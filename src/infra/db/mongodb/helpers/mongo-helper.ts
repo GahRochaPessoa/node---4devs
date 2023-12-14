@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { type Collection, MongoClient } from 'mongodb'
+import { type Collection, MongoClient, type ObjectId } from 'mongodb'
+import { type AccountModel } from '../../../../domain/models/account'
+import { type AddAccountModel } from '../../../../domain/usecases/add-account'
 
 export const MongoHelper = {
   client: null as unknown as MongoClient,
@@ -14,5 +16,15 @@ export const MongoHelper = {
 
   getCollection(name: string): Collection {
     return this.client.db().collection(name)
+  },
+
+  map(collection: AddAccountModel, id: ObjectId): AccountModel {
+    const accountObjModel = {
+      id: String(id),
+      email: collection.email,
+      name: collection.name,
+      password: collection.password
+    }
+    return accountObjModel
   }
 }
